@@ -144,7 +144,7 @@ patches by [@eatnumber1](https://github.com/eatnumber1),
 [@coughlanio](https://github.com/coughlanio)
 and [@Slashbunny](https://github.com/Slashbunny).
 
-EverDrive Pack HTGD layouts by
+EverDrive Pack HTGD (formerly known as "SMDBs") layouts by
 [@SmokeMonsterPacks](https://github.com/SmokeMonsterPacks).
 
 [GUI](https://github.com/Aleyr/EverDrive-Packs-Lists-Database-UI) by [@Aleyr](https://github.com/Aleyr).
