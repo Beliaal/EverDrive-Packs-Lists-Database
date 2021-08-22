@@ -69,7 +69,7 @@ if __name__ == '__main__':
                         nargs="?",
                         const=True,
                         type='bool',
-                        help=("Drops the 1st directory path in the SMDB file "
+                        help=("Drops the 1st directory path in the HTGD file "
                               "so you can customize the name."))
 
     ARGS = parser.parse_args()

@@ -61,7 +61,7 @@ if __name__ == '__main__':
                         default="copy",
                         help=("Strategy for how to get files into the output "
                               "folder. Smart uses copy for first instance of "
-                              "a file and hardlinks to that first one for "
+                              "of a file and hardlinks to that first one for "
                               "successive files."))
 
     # Valid uses of this flag include: -s, -s true, -s yes, --skip_existing=1
@@ -98,7 +98,7 @@ if __name__ == '__main__':
                         nargs="?",
                         const=True,
                         type='bool',
-                        help=("Drops the 1st directory path in the SMDB file "
+                        help=("Drops the 1st directory path in the HTGD file "
                               "so you can customize the name."))
 
     ARGS = parser.parse_args()
@@ -221,7 +221,8 @@ def parse_database(target_database, drop_initial_directory):
     number_of_entries = 0
     with open(target_database, "r") as target_database:
         for line in target_database:
-            hash_sha256, filename, _, _, hash_crc = line.strip().split("\t")[0:5]
+            hash_sha256, filename, _, _, hash_crc = line.strip().split("\t")[
+                0:5]
             number_of_entries += 1
             if drop_initial_directory:
                 first_level, filename = filename.split("/", 1)
