@@ -26,26 +26,26 @@ def writelns(towrite, path_2_file):
 
 def readlns(input, output):
 	dataset = dict()
-	dic_rot = 0  # How many rotations have we spun the dict...
+	dic_rot = 0  								# How many rotations have we spun the dict...
 
 	fro = open(input, "r")
 	for _line in fro:
-		_line = _line.replace('&', '&amp;')
+		_line = _line.replace('&', '&amp;')		# XML needs &amp;, not &...
 		temp = _line.rstrip().split("\t")
 
-		_sha256 = temp[0]
-		_sha1 = temp[2]
-		_md5 = temp[3]
-		_crc32 = temp[4]
-		_fsize = temp[5]  # File Size
-		_fpath = temp[1]
+		_sha256 = temp[0]						# sha256 | Not in use...
+		_sha1 = temp[2]							# sha1
+		_md5 = temp[3]							# md5
+		_crc32 = temp[4]						# crc32
+		_fsize = temp[5] 						# File Size
+		_fpath = temp[1]						# Filepath in database
 
 		temp = temp[1].split("/", 1)
-		_dbnme = temp[0]  # Database Name
+		_dbnme = temp[0]  						# Database Name
 		temp = temp[-1].rsplit("/", 1)
-		_rname = temp[1]
+		_rname = temp[1]						# ROM name
 		_gname = _rname.rsplit(".", 1)
-		_gname = _gname[0]
+		_gname = _gname[0]						# Game's name
 
 		if dic_rot == 0:
 			temp = ['<?xml version="1.0"?>', '<!DOCTYPE datafile PUBLIC "-//Logiqx//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">', '<datafile>', '\t<header>',
@@ -55,7 +55,7 @@ def readlns(input, output):
 
 		temp.clear()
 
-		# Construct a game container...
+												# Construct a game dictionary/container in logicqX format...
 		temp.append('\t<game name="{0}">'.format(_gname))
 		temp.append('\t\t<comment>Part of DB: "{0}" | Filepath: "{1}"</comment>'.format(_dbnme, _fpath))
 		temp.append('\t\t<description>{0}</description>'.format(_gname))
