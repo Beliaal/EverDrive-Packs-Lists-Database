@@ -1,15 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Use a HTGD database and convert it to Logiqx - DTD ROM Management Datafile format. "http://www.logiqx.com/Dats/datafile.dtd"
-"""
+#!/usr/bin/python3
 import datetime
+import argparse
 
 def create_DB(path_2_file):
 	fx = open(path_2_file, "w")
-	fi = open("./venv/include/num.txt", "w")
 	fx.close()
-	fi.close()
 
 def writeftr(path_2_file):
 	frw = open(path_2_file, "a")
@@ -28,11 +23,12 @@ def writelns(towrite, path_2_file):
 		frw.write(_val + "\n")
 	frw.close()
 
-def readlns(path_2_db):
-	databucket = dict()
-	dic_rot = 0					# How many rotations have we spun the dict...
 
-	fro = open(path_2_db, "r")
+def readlns(input, output):
+	dataset = dict()
+	dic_rot = 0  # How many rotations have we spun the dict...
+
+	fro = open(input, "r")
 	for _line in fro:
 		_line = _line.replace('&', '&amp;')
 		temp = _line.rstrip().split("\t")
@@ -52,18 +48,10 @@ def readlns(path_2_db):
 		_gname = _gname[0]
 
 		if dic_rot == 0:
-			temp = ['<?xml version="1.0"?>']
-			temp.append('<!DOCTYPE datafile PUBLIC "-//Logiqx//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">')
-			temp.append('<datafile>')
-			temp.append('\t<header>')
-			temp.append('\t\t<name>HTGDB:{0} database conversion</name>'.format(_dbnme))
-			temp.append('\t\t<description>Converted from HTGDB to datxml</description>')
-			temp.append('\t\t<version>{0}</version>'.format(datetime.datetime.now().strftime("%Y%m%d-%H%M")))
-			temp.append('\t\t<author>nedala</author>')
-			temp.append('\t\t<homepage>A Winrar is you!</homepage>')
-			temp.append('\t\t<url>https://www.winrar.com</url>')
-			temp.append('\t</header>')
-			writehdr(temp, "./venv/include/out.dat")
+			temp = ['<?xml version="1.0"?>', '<!DOCTYPE datafile PUBLIC "-//Logiqx//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">', '<datafile>', '\t<header>',
+				'\t\t<name>HTGDB:{0} database conversion</name>'.format(_dbnme), '\t\t<description>Converted from HTGDB to datxml</description>', '\t\t<version>{0}</version>'.format(datetime.datetime.now().strftime("%Y%m%d-%H%M")),
+				'\t\t<author>nedala</author>', '\t\t<homepage>A Winrar is you!</homepage>', '\t\t<url>https://www.winrar.com</url>', '\t</header>']
+			writehdr(temp, output)
 
 		temp.clear()
 
@@ -74,32 +62,23 @@ def readlns(path_2_db):
 		temp.append('\t\t<rom name="{0}" size="{1}" crc="{2}" md5="{3}" sha1="{4}"/>'.format(_rname, _fsize, _crc32, _md5, _sha1))
 		temp.append('\t</game>')
 
-		databucket.update({dic_rot: {"dat": temp}})
+		dataset.update({dic_rot: {"dat": temp}})
 		dic_rot += 1
-		fi = open("./venv/include/num.txt", "a")
-		fi.write(str(dic_rot) + "  " + _gname + "\n")
-		fi.close()
 
 	fro.close()
-	return databucket
-
-
+	return dataset
 
 def main():
-	outfile_n_path = "./venv/include/out.dat"
-	#conversionDB = "./venv/include/indata.mini.dat"
-	conversionDB = "./venv/include/indata.dat"
-	create_DB(outfile_n_path)				# Make sure we create a new file from start.
+	parser = argparse.ArgumentParser(prog='htgd2dat', description = 'Convert htgd databases to logicqX XML datfiles for use in standard rom managers...')
+	parser.add_argument('-i', '--input', help='The filename of the databaste that is to be converted', required = True)
+	parser.add_argument('-o', '--output', nargs = '?', help='The name of the converted file...', required = True)
+	args = parser.parse_args()
 
 	datdb = dict()
-	datdb = readlns(conversionDB)
-	#writehdr(outfile_path + outfile_name)
+	datdb = readlns(str(args.input), args.output)
 	for gid in datdb.values():
-		#print(gid.get("dat"))
-		#testlist = gid.get("dat")
-		writelns(gid.get("dat"), outfile_n_path)
-	writeftr(outfile_n_path)
-
+		writelns(gid.get("dat"), args.output)
+	writeftr(args.output)
 
 if __name__ == "__main__":
 	main()
