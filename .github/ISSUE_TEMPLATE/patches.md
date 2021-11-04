@@ -1,7 +1,5 @@
 ---
-name: patches
-about: hacks, translations, and patches
-title: ''
+name: patches about: hacks, translations, and patches title: ''
 labels: ''
 assignees: ''
 
@@ -9,7 +7,8 @@ assignees: ''
 
 Please provide specific links to each of the patches, with checksums for both the original and the patched ROMs.
 
-If a source ROM requires a header, those header bytes should be provided. This is required for some ancient SNES patches that may expect specific header bytes (not an issue for modern SNES patches that typically use a headerless no-intro SNES ROM). Header bytes for both source and patched NES ROMs should always be provided.
+If a source ROM requires a header, those header bytes should be provided. This is required for some ancient SNES patches that may expect specific header bytes (not an issue for modern SNES patches that typically use a headerless no-intro SNES ROM).
+Header bytes for both source and patched NES ROMs should always be provided.
 
 Patched SNES ROMs should always be headerless.
 
